@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.ws.testcanvas.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.ws.testcanvas.com" xmlns:intf="http://service.ws.testcanvas.com" xmlns:tns1="http://movimiento.ws.testcanvas.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.ws.testcanvas.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://movimiento.ws.testcanvas.com"/>
+   <element name="actualizarMovimiento">
+    <complexType>
+     <sequence>
+      <element name="obj" type="tns1:Posicion"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="actualizarMovimientoResponse">
+    <complexType>
+     <sequence>
+      <element name="actualizarMovimientoReturn" type="tns1:Posicion"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://movimiento.ws.testcanvas.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="Posicion">
+    <sequence>
+     <element name="ejeX" type="xsd:int"/>
+     <element name="ejeY" type="xsd:int"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="actualizarMovimientoRequest">
+
+      <wsdl:part element="impl:actualizarMovimiento" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="actualizarMovimientoResponse">
+
+      <wsdl:part element="impl:actualizarMovimientoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ImplMovimiento">
+
+      <wsdl:operation name="actualizarMovimiento">
+
+         <wsdl:input message="impl:actualizarMovimientoRequest" name="actualizarMovimientoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:actualizarMovimientoResponse" name="actualizarMovimientoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ImplMovimientoSoapBinding" type="impl:ImplMovimiento">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="actualizarMovimiento">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="actualizarMovimientoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="actualizarMovimientoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ImplMovimientoService">
+
+      <wsdl:port binding="impl:ImplMovimientoSoapBinding" name="ImplMovimiento">
+
+         <wsdlsoap:address location="http://localhost:8080/TestCanvas/services/ImplMovimiento"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

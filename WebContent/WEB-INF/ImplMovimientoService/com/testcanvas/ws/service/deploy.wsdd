@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ImplMovimientoService WSDL service -->
+
+  <service name="ImplMovimiento" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.ws.testcanvas.com"/>
+      <parameter name="wsdlServiceElement" value="ImplMovimientoService"/>
+      <parameter name="schemaQualified" value="http://service.ws.testcanvas.com,http://movimiento.ws.testcanvas.com"/>
+      <parameter name="wsdlServicePort" value="ImplMovimiento"/>
+      <parameter name="className" value="com.testcanvas.ws.service.ImplMovimiento"/>
+      <parameter name="wsdlPortType" value="ImplMovimiento"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://service.ws.testcanvas.com" xmlns:retNS="http://service.ws.testcanvas.com" xmlns:rtns="http://movimiento.ws.testcanvas.com" name="actualizarMovimiento" qname="operNS:actualizarMovimiento" returnQName="retNS:actualizarMovimientoReturn" returnType="rtns:Posicion" soapAction="">
+        <parameter xmlns:pns="http://service.ws.testcanvas.com" xmlns:tns="http://movimiento.ws.testcanvas.com" qname="pns:obj" type="tns:Posicion"/>
+      </operation>
+      <parameter name="allowedMethods" value="actualizarMovimiento"/>
+
+      <typeMapping xmlns:ns="http://movimiento.ws.testcanvas.com" qname="ns:Posicion" type="java:com.testcanvas.ws.movimiento.Posicion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
