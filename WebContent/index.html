@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<h1>Test Canvas</h1>
+	<canvas id="game" width="640" height="480"></canvas>
+	<br />
+	<input type="button" onclick="posicion();" value="Click" />
+	<script type="text/javascript">
+		// Colores
+		verdeConst = "01ff02";
+
+		// Valores cuadrado
+		pt = 40;	// Tamannio
+		ph = 40;
+
+		p1x = 0;	// Posicion
+		p1y = 0;
+
+		vx = 0;		// Velocidad
+		vy = 0;
+		
+		window.onload = function() {
+			c = document.getElementById("game");
+			cc = c.getContext("2d");
+			document.addEventListener("keydown", keyPush);
+			posicionInicio();
+			setInterval(update, 1000 / 30);
+		}
+
+		function update() {
+			cc.fillStyle = "black";
+			cc.fillRect(0, 0, c.width, c.height);
+
+			crearCirculo(p1x, p1y, 'green', '#003300');
+			
+			mover();
+		}
+		
+		function posicionInicio() {
+			p1x = c.width / 2;	// Posicion
+			p1y = c.height / 2;	
+		}
+		
+		function crearRectangulo(){
+			cc.fillStyle = "green";
+			cc.fillRect(p1x, p1y, pt, ph);
+		}
+		
+		function crearCirculo(x, y, color, colorBorde){
+			radius = 20;
+			
+			cc.beginPath();
+			cc.arc(p1x, p1y, radius, 0, 2 * Math.PI, false);
+			cc.fillStyle = color;
+			cc.fill();
+			cc.lineWidth = 5;
+			cc.strokeStyle = colorBorde;
+			cc.stroke();
+		}
+		
+		function mover(){
+			p1x += vx;
+			p1y += vy;
+			
+			if (p1x < 0) { p1x = c.width; }
+			if (p1x > c.width) { p1x = 0; }
+			if (p1y < 0) { p1y = c.height; }
+			if (p1y > c.height) { p1y = 0; }
+		}
+		
+		function keyPush(evt){
+			
+			vContante = 4;
+			
+			switch (evt.keyCode) {
+			case 37:	// Izq
+				vx = -vContante; vy = 0;
+				break;
+			case 38:	// 
+				vx = 0; vy = -vContante; 
+				break;
+			case 39:
+				vx = vContante; vy = 0;
+				break;
+			case 40:
+				vx = 0; vy = vContante;
+				break;			
+			default:
+				vx =  0; vy = 0;
+				break;
+			}		
+		}
+		
+	</script>
+	<script type="text/javascript">
+
+	function posicion(){
+	
+		var soapServiceURL = 'http://localhost:8080/TestCanvas/services/ImplMovimiento';
+		
+		var soapMessage = 
+			'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.testcanvas.com" xmlns:mov="http://movimiento.ws.testcanvas.com">\
+		   <soapenv:Body> \
+		      <ser:actualizarMovimiento> \
+		         <ser:obj> \
+		            <mov:ejeX>111</mov:ejeX> \
+		            <mov:ejeY>222</mov:ejeY> \
+		         </ser:obj> \
+		      </ser:actualizarMovimiento> \
+		   </soapenv:Body> \
+		</soapenv:Envelope>';
+		
+		jQuery.ajax({
+	          url: soapServiceURL,
+	          type: "POST",
+	          dataType: "xml",
+	          data: soapMessage,
+	          contentType: "text/xml; charset=\"utf-8\"",
+
+	          //processData: false,   // what is it for? may be should be true when using 'complete:' ?
+	          //timeout: 5000,
+
+	          // below I first try to have only 'complete:' then I tried to have 'success:' + 'error:', then the 3. Nothing seems to be ok. I do not find which one i should use.
+	          complete: myCallback,
+
+	          success: function( response ){	              
+	              alert("success!!!");
+	          },
+
+	          error: function(XMLHttpRequest,textStatus, errorThrown){
+	              alert("error : " + textStatus);
+	          }
+
+	  });
+		
+		function myCallback(xmlHttpRequest, status){
+			//alert("myCallback");
+		}
+	}
+	
+	</script>				
+</body>
+</html>
