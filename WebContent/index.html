@@ -4,12 +4,16 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.soap.js"></script>
+<script type="text/javascript" src="js/jquery.format.js"></script>
 </head>
 <body>
 	<h1>Test Canvas</h1>
 	<canvas id="game" width="640" height="480"></canvas>
 	<br />
-	<input type="button" onclick="posicion();" value="Click" />
+	<input type="button" onclick="soapRequest();" value="Click" />
+	<br />
+	<pre><code id="output"></code></pre>
 	<script type="text/javascript">
 		// Colores
 		verdeConst = "01ff02";
@@ -99,48 +103,24 @@
 	</script>
 	<script type="text/javascript">
 
-	function posicion(){
-	
-		var soapServiceURL = 'http://localhost:8080/TestCanvas/services/ImplMovimiento';
+	function soapRequest(){
 		
-		var soapMessage = 
-			'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.testcanvas.com" xmlns:mov="http://movimiento.ws.testcanvas.com">\
-		   <soapenv:Body> \
-		      <ser:actualizarMovimiento> \
-		         <ser:obj> \
-		            <mov:ejeX>111</mov:ejeX> \
-		            <mov:ejeY>222</mov:ejeY> \
-		         </ser:obj> \
-		      </ser:actualizarMovimiento> \
-		   </soapenv:Body> \
-		</soapenv:Envelope>';
-		
-		jQuery.ajax({
-	          url: soapServiceURL,
-	          type: "POST",
-	          dataType: "xml",
-	          data: soapMessage,
-	          contentType: "text/xml; charset=\"utf-8\"",
-
-	          //processData: false,   // what is it for? may be should be true when using 'complete:' ?
-	          //timeout: 5000,
-
-	          // below I first try to have only 'complete:' then I tried to have 'success:' + 'error:', then the 3. Nothing seems to be ok. I do not find which one i should use.
-	          complete: myCallback,
-
-	          success: function( response ){	              
-	              alert("success!!!");
-	          },
-
-	          error: function(XMLHttpRequest,textStatus, errorThrown){
-	              alert("error : " + textStatus);
-	          }
-
-	  });
-		
-		function myCallback(xmlHttpRequest, status){
-			//alert("myCallback");
-		}
+		$.soap({
+			url: "http://localhost:8080/TestCanvas/services/ImplMovimiento?wsdl",
+			method: "actualizarMovimiento",
+			data: {ID: 20, ejeX: 420, ejeY: 421},
+			HTTPHeaders:{
+				'Content-Type': 'application/xml',
+				'Server-Protocol': 'SOAP'
+			},
+			success: function(response){
+				response = $.format(response.toString(),{ method: 'xml'});
+				$("#output").text(response);
+			},
+			error: function(data, status, req) {
+		        alert('err'+data.state);
+			}
+		});
 	}
 	
 	</script>				

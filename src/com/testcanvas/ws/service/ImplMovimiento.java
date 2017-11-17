@@ -5,13 +5,14 @@ import com.testcanvas.ws.movimiento.Posicion;
 public class ImplMovimiento implements IfaceMovimiento{
 
 	@Override
-	public Posicion actualizarMovimiento(Posicion obj) {
+	public boolean actualizarMovimiento(int ID, int ejeX, int ejeY) {
 		// TODO Auto-generated method stub
-		String msg;
-		msg = String.valueOf(obj.getEjeX()) + ":" + String.valueOf(obj.getEjeY()); 
+		Posicion pos = new Posicion(ID);
+		pos.setEjeX(ejeX); 
+		pos.setEjeY(ejeY);
 		
-		System.out.println(msg);
-		return null;
+		System.out.println("id:" + ID + " coordenadas:" + ejeX + ":" + ejeY);
+		return true;
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.testcanvas.ws.service;
 
-import com.testcanvas.ws.movimiento.Posicion;;
-
 public interface IfaceMovimiento {
-	Posicion actualizarMovimiento(Posicion obj);
+	boolean actualizarMovimiento(int ID, int ejeX, int ejeY);
 }
