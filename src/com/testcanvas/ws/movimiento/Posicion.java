@@ -9,8 +9,16 @@ public class Posicion implements Serializable {
 	 */
 	private static final long serialVersionUID = 2692085561590224720L;
 	private int ID;
+	
+	private String colorCentro;
+	private String colorBorde;
+	
 	private int ejeX;
 	private int ejeY;
+	
+	public Posicion() {
+		super();
+	}
 	
 	public Posicion(int iD) {
 		super();
@@ -25,6 +33,14 @@ public class Posicion implements Serializable {
 		ID = iD;
 	}
 	
+	public String getColorBorde() {
+		return colorBorde;
+	}
+
+	public void setColorBorde(String colorBorde) {
+		this.colorBorde = colorBorde;
+	}
+	
 	public int getEjeX() {
 		return ejeX;
 	}
@@ -36,6 +52,14 @@ public class Posicion implements Serializable {
 	}
 	public void setEjeY(int ejeY) {
 		this.ejeY = ejeY;
+	}
+
+	public String getColorCentro() {
+		return colorCentro;
+	}
+
+	public void setColorCentro(String colorCentro) {
+		this.colorCentro = colorCentro;
 	}
 	
 }

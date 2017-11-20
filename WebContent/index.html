@@ -11,12 +11,13 @@
 	<h1>Test Canvas</h1>
 	<canvas id="game" width="640" height="480"></canvas>
 	<br />
-	<input type="button" onclick="soapRequest();" value="Click" />
+	<input type="button" onclick="getLista();" value="Click" /><input id="idCliente" type="text" readonly="readonly" />
 	<br />
 	<pre><code id="output"></code></pre>
 	<script type="text/javascript">
 		// Colores
-		verdeConst = "01ff02";
+		cCentro = getColorRandom();
+		cBorde = getColorRandom();
 
 		// Valores cuadrado
 		pt = 40;	// Tamannio
@@ -28,19 +29,23 @@
 		vx = 0;		// Velocidad
 		vy = 0;
 		
+		id_elemento = valorRandom();
+		
 		window.onload = function() {
 			c = document.getElementById("game");
 			cc = c.getContext("2d");
 			document.addEventListener("keydown", keyPush);
 			posicionInicio();
 			setInterval(update, 1000 / 30);
+			setInterval(soapRequest, 1000/4);		
+			//setInterval(getLista, 1000/4);
 		}
 
 		function update() {
 			cc.fillStyle = "black";
 			cc.fillRect(0, 0, c.width, c.height);
 
-			crearCirculo(p1x, p1y, 'green', '#003300');
+			crearCirculo(p1x, p1y, cCentro, cBorde);
 			
 			mover();
 		}
@@ -100,25 +105,66 @@
 			}		
 		}
 		
-	</script>
-	<script type="text/javascript">
-
-	function soapRequest(){
 		
+		// Color HTML
+		function getColorRandom(){
+			var r = Math.floor((Math.random() * 255) + 1);
+			var g = Math.floor((Math.random() * 255) + 1);
+			var b = Math.floor((Math.random() * 255) + 1);
+			
+			return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+		}
+		
+		function componentToHex(c) {
+		    var hex = c.toString(16);
+		    return hex.length == 1 ? "0" + hex : hex;
+		}
+		
+		// ID
+		function valorRandom(){
+			var num = Math.floor((Math.random() * 100) + 1);
+			document.getElementById("idCliente").value = num;
+			return num;
+		}
+		
+	// Llamadas SOAP
+	
+	function soapRequest(){	
 		$.soap({
 			url: "http://localhost:8080/TestCanvas/services/ImplMovimiento?wsdl",
 			method: "actualizarMovimiento",
-			data: {ID: 20, ejeX: 420, ejeY: 421},
+			data: {ID: id_elemento, colorCentro: cCentro, colorBorde: cBorde, ejeX: p1x, ejeY: p1y},
 			HTTPHeaders:{
 				'Content-Type': 'application/xml',
 				'Server-Protocol': 'SOAP'
 			},
 			success: function(response){
-				response = $.format(response.toString(),{ method: 'xml'});
-				$("#output").text(response);
+				//response = $.format(response.toString(),{ method: 'xml'});
+				//$("#output").text(response);
 			},
 			error: function(data, status, req) {
-		        alert('err'+data.state);
+		        //alert('err'+data.state);
+			}
+		});
+	}
+	
+	function getLista(){
+		$.soap({
+			url: "http://localhost:8080/TestCanvas/services/ImplMovimiento?wsdl",
+			method: "getListaPosiciones",
+			data: {},
+			HTTPHeaders:{
+				'Content-Type': 'application/xml',
+				'Server-Protocol': 'SOAP'
+			},
+			success: function(data, status, req, xml, xmlHttpRequest, responseXML){
+				//response = $.format(response.toString(),{ method: 'xml'});
+				//$("#output").text(response);
+				if(true){}
+			},
+			error: function(data, status, req) {
+		        //alert('err'+data.state);
+				if(true){}
 			}
 		});
 	}

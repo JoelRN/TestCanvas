@@ -4,52 +4,30 @@ import java.util.*;
 import com.testcanvas.ws.movimiento.*;
 
 public class VariablesGlobales {
-	private static ArrayList<Posicion> lPosiciones;		
+	private static HashMap<String, Posicion> lPosiciones;		
 	
-	public static ArrayList<Posicion> getlPosiciones() {
-		return lPosiciones;
-	}
-
-	public static void anniadirlPosiciones(Posicion pos) {
-
-		if(lPosiciones == null) {
-			lPosiciones = new ArrayList<Posicion>();
-		}		
-		lPosiciones.add(pos);
+	
+	public static Collection<Posicion> getlPosiciones() {
+		return lPosiciones.values();
 	}
 	
-	public static void eliminarlPosiciones(Posicion pos) {
+	public static void actualizarlPosiciones(Posicion pos) {
+		// Inicializo el array
 		if(lPosiciones == null) {
-			lPosiciones = new ArrayList<Posicion>();
+			lPosiciones = new HashMap<String, Posicion>();
 		}		
+		
+		String ID = Integer.toString(pos.getID());
+		lPosiciones.put(ID, pos);
+		
+	}
+	
+	/*public static void eliminarlPosiciones(Posicion pos) {		
 		for (int i = 0; i < lPosiciones.size() - 1; i++) {
 			if(pos.getID() == lPosiciones.get(i).getID()) {
 				lPosiciones.remove(i);	
 			}			
 		}		
-	}
-	
-	public static boolean existelPosiciones(Posicion pos) {
-		if(lPosiciones == null) {
-			lPosiciones = new ArrayList<Posicion>();
-		}		
-		for (int i = 0; i < lPosiciones.size() - 1; i++) {
-			if(pos.getID() == lPosiciones.get(i).getID()) {
-				return true;	
-			}			
-		}
-		return false;
-	}
-	
-	public static void actualizarlPosiciones(Posicion pos) {
-		if(lPosiciones == null) {
-			lPosiciones = new ArrayList<Posicion>();
-		}		
-		for (int i = 0; i < lPosiciones.size() - 1; i++) {
-			if(pos.getID() == lPosiciones.get(i).getID()) {
-				lPosiciones.get(i).setEjeX(pos.getEjeX());
-				lPosiciones.get(i).setEjeY(pos.getEjeY());
-			}			
-		}
-	}
+	}*/
+		
 }

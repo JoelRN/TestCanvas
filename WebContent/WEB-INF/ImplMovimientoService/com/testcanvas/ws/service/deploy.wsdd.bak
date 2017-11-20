@@ -15,17 +15,29 @@
   <service name="ImplMovimiento" provider="java:RPC" style="wrapped" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://service.ws.testcanvas.com"/>
       <parameter name="wsdlServiceElement" value="ImplMovimientoService"/>
-      <parameter name="schemaQualified" value="http://service.ws.testcanvas.com"/>
+      <parameter name="schemaQualified" value="http://service.ws.testcanvas.com,http://movimiento.ws.testcanvas.com"/>
       <parameter name="wsdlServicePort" value="ImplMovimiento"/>
       <parameter name="className" value="com.testcanvas.ws.service.ImplMovimientoSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="ImplMovimiento"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getListaPosiciones" qname="operNS:getListaPosiciones" xmlns:operNS="http://service.ws.testcanvas.com" returnQName="retNS:getListaPosicionesReturn" xmlns:retNS="http://service.ws.testcanvas.com" returnType="rtns:Posicion" xmlns:rtns="http://movimiento.ws.testcanvas.com" soapAction="" >
+      </operation>
       <operation name="actualizarMovimiento" qname="operNS:actualizarMovimiento" xmlns:operNS="http://service.ws.testcanvas.com" returnQName="retNS:actualizarMovimientoReturn" xmlns:retNS="http://service.ws.testcanvas.com" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:ID" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:colorCentro" xmlns:pns="http://service.ws.testcanvas.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:colorBorde" xmlns:pns="http://service.ws.testcanvas.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:ejeX" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:ejeY" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="actualizarMovimiento"/>
+      <parameter name="allowedMethods" value="getListaPosiciones actualizarMovimiento"/>
 
+      <typeMapping
+        xmlns:ns="http://movimiento.ws.testcanvas.com"
+        qname="ns:Posicion"
+        type="java:com.testcanvas.ws.movimiento.Posicion"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
   </service>
 </deployment>
