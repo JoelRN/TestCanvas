@@ -15,6 +15,9 @@
 	<br />
 	<pre><code id="output"></code></pre>
 	<script type="text/javascript">
+	
+		lOtrosUsuarios = [];
+	
 		// Colores
 		cCentro = getColorRandom();
 		cBorde = getColorRandom();
@@ -37,8 +40,8 @@
 			document.addEventListener("keydown", keyPush);
 			posicionInicio();
 			setInterval(update, 1000 / 30);
-			setInterval(soapRequest, 1000/4);		
-			//setInterval(getLista, 1000/4);
+			setInterval(soapRequest, 1000/30);		
+			setInterval(getLista, 1000/30);
 		}
 
 		function update() {
@@ -46,6 +49,11 @@
 			cc.fillRect(0, 0, c.width, c.height);
 
 			crearCirculo(p1x, p1y, cCentro, cBorde);
+			
+			for(i = 0; i < lOtrosUsuarios.length; i++){
+				var p = lOtrosUsuarios[i];
+				crearCirculo(p.ejeX, p.ejeY, p.colorCentro, p.colorBorde);
+			}
 			
 			mover();
 		}
@@ -64,7 +72,7 @@
 			radius = 20;
 			
 			cc.beginPath();
-			cc.arc(p1x, p1y, radius, 0, 2 * Math.PI, false);
+			cc.arc(x, y, radius, 0, 2 * Math.PI, false);
 			cc.fillStyle = color;
 			cc.fill();
 			cc.lineWidth = 5;
@@ -157,10 +165,32 @@
 				'Content-Type': 'application/xml',
 				'Server-Protocol': 'SOAP'
 			},
-			success: function(data, status, req, xml, xmlHttpRequest, responseXML){
-				//response = $.format(response.toString(),{ method: 'xml'});
-				//$("#output").text(response);
-				if(true){}
+			success: function(response){
+				var txt_output = $.format(response.toString(),{ method: 'xml'});
+				$("#output").text(txt_output);
+				
+				var lPosiciones = response.content.getElementsByTagName("getListaPosicionesResponse");
+				var lPosiciones = lPosiciones[0].children;
+				
+				lOtrosUsuarios = [];
+				
+				for (i=1; i <= lPosiciones.length; i++){
+					var _ID = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":ID")[0].innerHTML;
+					var _colorBorde = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":colorBorde")[0].innerHTML;
+					var _colorCentro = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":colorCentro")[0].innerHTML;
+					var _ejeX = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":ejeX")[0].innerHTML;
+					var _ejeY = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":ejeY")[0].innerHTML;
+					
+					if (_ID != id_elemento) {
+						var pos = {ID: _ID, 
+								colorBorde: _colorBorde,
+								colorCentro: _colorCentro,
+								ejeX: _ejeX,
+								ejeY: _ejeY};
+						lOtrosUsuarios.push(pos);
+					}					
+				}
+								
 			},
 			error: function(data, status, req) {
 		        //alert('err'+data.state);
@@ -168,6 +198,8 @@
 			}
 		});
 	}
+	
+	
 	
 	</script>				
 </body>
