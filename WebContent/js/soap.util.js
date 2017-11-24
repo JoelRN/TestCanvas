@@ -7,7 +7,8 @@ function soapRequest(){
 			colorCentro: m_us.colorCentro, 
 			colorBorde: m_us.colorBorde, 
 			ejeX: m_us.ejeX, 
-			ejeY: m_us.ejeY},
+			ejeY: m_us.ejeY,
+			direccion: m_us.dir},
 		HTTPHeaders:{
 			'Content-Type': 'application/xml',
 			'Server-Protocol': 'SOAP'
@@ -50,13 +51,15 @@ function getLista(){
 				var _colorCentro = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":colorCentro")[0].innerHTML;
 				var _ejeX = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":ejeX")[0].innerHTML;
 				var _ejeY = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":ejeY")[0].innerHTML;
+				var _direccion = lPosiciones[i - 1].getElementsByTagName("ns" + i + ":dir")[0].innerHTML;
 
 				if (_ID != m_us.ID) {
 					var pos = {ID: _ID, 
 							colorBorde: _colorBorde,
 							colorCentro: _colorCentro,
 							ejeX: _ejeX,
-							ejeY: _ejeY};
+							ejeY: _ejeY,
+							dir: _direccion};
 					lOtrosUsuarios.push(pos);
 				}					
 			}

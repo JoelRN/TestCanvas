@@ -16,6 +16,8 @@ public class Posicion implements Serializable {
 	private int ejeX;
 	private int ejeY;
 	
+	private int dir;
+	
 	public Posicion() {
 		super();
 	}
@@ -60,6 +62,14 @@ public class Posicion implements Serializable {
 
 	public void setColorCentro(String colorCentro) {
 		this.colorCentro = colorCentro;
+	}
+
+	public int getDir() {
+		return dir;
+	}
+
+	public void setDir(int dir) {
+		this.dir = dir;
 	}
 	
 }

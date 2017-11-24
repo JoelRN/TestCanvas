@@ -8,16 +8,17 @@ import com.testcanvas.ws.movimiento.Posicion;
 public class ImplMovimiento implements IfaceMovimiento{
 
 	@Override
-	public boolean actualizarMovimiento(int ID, String colorCentro, String colorBorde, int ejeX, int ejeY) {		
+	public boolean actualizarMovimiento(int ID, String colorCentro, String colorBorde, int ejeX, int ejeY, int dir) {		
 		Posicion pos = new Posicion(ID);
 		pos.setColorCentro(colorCentro);
 		pos.setColorBorde(colorBorde);			
 		pos.setEjeX(ejeX); 
 		pos.setEjeY(ejeY);
+		pos.setDir(dir);
 		
 		VariablesGlobales.actualizarlPosiciones(pos);
 				
-		System.out.println("id:" + ID + " coordenadas:" + ejeX + ":" + ejeY + "  " + colorCentro + ":" + colorBorde);
+		//System.out.println("id:" + ID + " coordenadas:" + ejeX + ":" + ejeY + "  " + colorCentro + ":" + colorBorde);
 		return true;
 	}
 

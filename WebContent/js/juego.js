@@ -5,7 +5,8 @@ m_us = {ID: 0,
 		colorCentro: "",
 		colorBorde: "",
 		ejeX: 0,
-		ejeY: 0};
+		ejeY: 0,
+		dir: 0};
 
 refresh = 1000 / 30;	// Refresco por segundo
 
@@ -42,11 +43,11 @@ function update() {
 	cc.fillStyle = "black";
 	cc.fillRect(0, 0, c.width, c.height);
 
-	crearCirculo(m_us.ejeX, m_us.ejeY, m_us.colorCentro, m_us.colorBorde);
+	dibu.crearPersonaje(m_us);
 
 	for(i = 0; i < lOtrosUsuarios.length; i++){
 		var p = lOtrosUsuarios[i];
-		crearCirculo(p.ejeX, p.ejeY, p.colorCentro, p.colorBorde);
+		dibu.crearPersonaje(p);		
 	}
 
 	mover();
@@ -75,18 +76,23 @@ function keyPush(evt){
 	switch (evt.keyCode) {
 	case 37:	// Izq
 		vx = -vConstante; vy = 0;
+		m_us.dir = 270;
 		break;
-	case 38:	// 
+	case 38:	// Arriba
 		vx = 0; vy = -vConstante; 
+		m_us.dir = 0;
 		break;
-	case 39:
+	case 39:	// Der
 		vx = vConstante; vy = 0;
+		m_us.dir = 90;
 		break;
-	case 40:
+	case 40:	// Abajo
 		vx = 0; vy = vConstante;
+		m_us.dir = 180;
 		break;			
 	default:
 		//vx =  0; vy = 0;
 		break;
 	}		
 }
+

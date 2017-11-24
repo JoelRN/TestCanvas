@@ -5,16 +5,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://service.ws.testcanvas.com" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://movimiento.ws.testcanvas.com"/>
-   <element name="getListaPosiciones">
-    <complexType/>
-   </element>
-   <element name="getListaPosicionesResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListaPosicionesReturn" type="tns1:Posicion"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="actualizarMovimiento">
     <complexType>
      <sequence>
@@ -23,6 +13,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
       <element name="colorBorde" type="xsd:string"/>
       <element name="ejeX" type="xsd:int"/>
       <element name="ejeY" type="xsd:int"/>
+      <element name="dir" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
@@ -33,6 +24,16 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="getListaPosiciones">
+    <complexType/>
+   </element>
+   <element name="getListaPosicionesResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListaPosicionesReturn" type="tns1:Posicion"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://movimiento.ws.testcanvas.com" xmlns="http://www.w3.org/2001/XMLSchema">
    <complexType name="Posicion">
@@ -40,6 +41,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="ID" type="xsd:int"/>
      <element name="colorBorde" nillable="true" type="xsd:string"/>
      <element name="colorCentro" nillable="true" type="xsd:string"/>
+     <element name="dir" type="xsd:int"/>
      <element name="ejeX" type="xsd:int"/>
      <element name="ejeY" type="xsd:int"/>
     </sequence>
@@ -81,18 +83,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="ImplMovimiento">
 
-      <wsdl:operation name="getListaPosiciones">
-
-         <wsdl:input message="impl:getListaPosicionesRequest" name="getListaPosicionesRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListaPosicionesResponse" name="getListaPosicionesResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="actualizarMovimiento">
 
          <wsdl:input message="impl:actualizarMovimientoRequest" name="actualizarMovimientoRequest">
@@ -105,29 +95,23 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="getListaPosiciones">
+
+         <wsdl:input message="impl:getListaPosicionesRequest" name="getListaPosicionesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListaPosicionesResponse" name="getListaPosicionesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="ImplMovimientoSoapBinding" type="impl:ImplMovimiento">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="getListaPosiciones">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListaPosicionesRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListaPosicionesResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="actualizarMovimiento">
 
@@ -140,6 +124,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="actualizarMovimientoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListaPosiciones">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListaPosicionesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListaPosicionesResponse">
 
             <wsdlsoap:body use="literal"/>
 

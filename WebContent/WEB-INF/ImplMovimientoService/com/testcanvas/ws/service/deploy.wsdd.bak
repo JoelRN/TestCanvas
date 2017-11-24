@@ -20,14 +20,15 @@
       <parameter name="className" value="com.testcanvas.ws.service.ImplMovimientoSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="ImplMovimiento"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation name="getListaPosiciones" qname="operNS:getListaPosiciones" xmlns:operNS="http://service.ws.testcanvas.com" returnQName="retNS:getListaPosicionesReturn" xmlns:retNS="http://service.ws.testcanvas.com" returnType="rtns:Posicion" xmlns:rtns="http://movimiento.ws.testcanvas.com" soapAction="" >
-      </operation>
       <operation name="actualizarMovimiento" qname="operNS:actualizarMovimiento" xmlns:operNS="http://service.ws.testcanvas.com" returnQName="retNS:actualizarMovimientoReturn" xmlns:retNS="http://service.ws.testcanvas.com" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:ID" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:colorCentro" xmlns:pns="http://service.ws.testcanvas.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:colorBorde" xmlns:pns="http://service.ws.testcanvas.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:ejeX" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:ejeY" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:dir" xmlns:pns="http://service.ws.testcanvas.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getListaPosiciones" qname="operNS:getListaPosiciones" xmlns:operNS="http://service.ws.testcanvas.com" returnQName="retNS:getListaPosicionesReturn" xmlns:retNS="http://service.ws.testcanvas.com" returnType="rtns:Posicion" xmlns:rtns="http://movimiento.ws.testcanvas.com" soapAction="" >
       </operation>
       <parameter name="allowedMethods" value="getListaPosiciones actualizarMovimiento"/>
 
